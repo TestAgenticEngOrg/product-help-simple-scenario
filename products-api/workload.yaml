@@ -1,0 +1,9 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: products-api
+# No visibility beyond the project: the API isn't published on any gateway, so it needs no key.
+# Only components in the same project reach it, such as products-mcp.
+endpoints:
+  - name: products-api
+    port: 8080
+    type: HTTP

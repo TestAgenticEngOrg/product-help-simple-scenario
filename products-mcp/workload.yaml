@@ -1,0 +1,18 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: products-mcp
+endpoints:
+  - name: products-mcp
+    visibility:
+      - external
+    port: 9090
+    type: HTTP
+# The Products API runs in the same project. OpenChoreo injects its address as PRODUCTS_API_URL, so
+# the call stays inside the project and needs no key, no Resource and no change per project.
+dependencies:
+  endpoints:
+    - component: products-api
+      name: products-api
+      visibility: project
+      envBindings:
+        address: PRODUCTS_API_URL
