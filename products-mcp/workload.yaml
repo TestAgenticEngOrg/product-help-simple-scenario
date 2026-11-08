@@ -9,10 +9,11 @@ endpoints:
     type: HTTP
 # The Products API runs in the same project. OpenChoreo injects its address as PRODUCTS_API_URL, so
 # the call stays inside the project and needs no key, no Resource and no change per project.
+# The endpoint is the one the products-api build generates from its service's base path, /api/v1.
 dependencies:
   endpoints:
     - component: products-api
-      name: products-api
+      name: api-v1
       visibility: project
       envBindings:
         address: PRODUCTS_API_URL
