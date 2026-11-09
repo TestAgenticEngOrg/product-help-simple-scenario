@@ -16,7 +16,8 @@ Deploy all three into the project that the user selected, to the Development env
 2. **Products MCP server.** Create an integration named `products-mcp`: type `mcp-server`, path `products-mcp`, WSO2 Integrator runtime, no environment variables. Deploy it after `products-api` is deployed. Then point it at the API:
    - Set its `productsApiUrl` configurable for Development to the Products API's address inside the project, which the API's endpoint shows in the Integration Platform, with `set_configurables`. Set it only after this first deploy: before the MCP server has a release, the Integration Platform doesn't keep the value.
    - Deploy `products-mcp` again, so the value applies.
-   - If you can't set configurables, ask the user to set it on the MCP server's Configs page in the Integration Platform console and deploy again, then continue. Its endpoint is public, so the deploy publishes it on the MCP gateway. The MCP URL is that gateway URL plus `/mcp`. If the endpoint is not published, ask the user to make it public in the Integration Platform console.
+   - If you can't set configurables, ask the user to set it on the MCP server's Configs page in the Integration Platform console and deploy again, then continue.
+   - Its endpoint is public, so the deploy publishes it on the MCP gateway. The MCP URL is that gateway URL plus `/mcp`. If the endpoint is not published, ask the user to make it public in the Integration Platform console.
 3. **Product Help Agent.** On the Agent Platform, create a platform-hosted Python agent named `product-help-agent`: app path `/agent`, Python 3.11, default chat interface, environment variable `PRODUCTS_MCP_URL` set to the MCP URL from step 2.
    - Set `MCP_API_KEY`, the MCP gateway's API key, as a secret through a secure form.
    - Attach an Anthropic LLM provider, with the environment variable names `LLM_PROVIDER_URL` and `LLM_PROVIDER_KEY`. If the organization has none, add one first.
