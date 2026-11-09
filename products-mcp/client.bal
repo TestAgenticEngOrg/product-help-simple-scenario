@@ -4,11 +4,14 @@ import ballerina/os;
 // The Products API's base path; it serves its routes under it.
 const API_BASE_PATH = "/api/v1";
 
-// The Products API in the same project. On WSO2 Cloud, OpenChoreo injects its address from the
-// endpoint dependency in workload.yaml; locally it defaults to the API on localhost.
-final string productsApiUrl = apiUrl(os:getEnv("PRODUCTS_API_URL"));
+// The Products API's address. On WSO2 Cloud it is set per environment in the Integration Platform,
+// to the API's address inside the project, so each deploy of the sample reaches its own API. Locally
+// it falls back to PRODUCTS_API_URL, then to the API on localhost.
+configurable string productsApiUrl = "";
 
-final http:Client productsApi = check new (productsApiUrl, httpVersion = http:HTTP_1_1);
+final string apiBaseUrl = apiUrl(productsApiUrl != "" ? productsApiUrl : os:getEnv("PRODUCTS_API_URL"));
+
+final http:Client productsApi = check new (apiBaseUrl, httpVersion = http:HTTP_1_1);
 
 // Accepts the API's address with or without the base path, so http://products-api:8080 and
 // http://products-api:8080/api/v1 both work.

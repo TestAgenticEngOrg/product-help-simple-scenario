@@ -35,18 +35,9 @@ Integrator runtime. Deploy it to Development. Leave its endpoint as it is: it's 
 Create another integration from this repository: type `mcp-server`, path `products-mcp`, WSO2 Integrator runtime.
 It needs no environment variables. Deploy it to Development after the API.
 
-[`products-mcp/workload.yaml`](products-mcp/workload.yaml) declares the API as an endpoint dependency, so the
-deploy injects its address:
-
-```yaml
-dependencies:
-  endpoints:
-    - component: products-api
-      name: products-api
-      visibility: project
-      envBindings:
-        address: PRODUCTS_API_URL
-```
+Before deploying it, set its `productsApiUrl` configurable for Development to the API's address inside the
+project, which the API's endpoint shows in the Integration Platform. Each deploy of the sample then reaches its
+own API, whatever the components are named.
 
 Then make the MCP server's endpoint public, so it's published on the MCP gateway. The MCP URL is that gateway
 URL plus `/mcp`.
@@ -89,7 +80,11 @@ A `404` from the API is reported as "not found"; any other failure as the catalo
 
 | Env var | Default | Purpose |
 |---|---|---|
-| `PRODUCTS_API_URL` | `http://localhost:8080` | The Products API's address, with or without `/api/v1`. Injected from the endpoint dependency on WSO2 Cloud |
+| `PRODUCTS_API_URL` | `http://localhost:8080` | The Products API's address, with or without `/api/v1`, for local runs |
+
+| Configurable | Default | Purpose |
+|---|---|---|
+| `productsApiUrl` | empty, which falls back to `PRODUCTS_API_URL` | The Products API's address. Set per environment on WSO2 Cloud |
 
 ## Product Help Agent
 
